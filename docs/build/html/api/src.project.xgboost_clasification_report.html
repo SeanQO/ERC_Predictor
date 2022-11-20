@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>src.project.getDataAndTarget &mdash; ERC_Predictor 0.1 documentation</title>
+  <title>src.project.xgboost_clasification_report &mdash; ERC_Predictor 0.1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -20,8 +20,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="src.project.make_train_test_validation" href="src.project.make_train_test_validation.html" />
-    <link rel="prev" title="src.project.__yes_and_no_transform" href="src.project.__yes_and_no_transform.html" /> 
+    <link rel="next" title="src.project.plot_feature_importance" href="src.project.plot_feature_importance.html" />
+    <link rel="prev" title="src.project.xgboost_tunning" href="src.project.xgboost_tunning.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -50,10 +50,7 @@
 <li class="toctree-l2"><a class="reference internal" href="src.project.drop_all_na.html">src.project.drop_all_na</a></li>
 <li class="toctree-l2"><a class="reference internal" href="src.project.CategoricalVariablesTransformation.html">src.project.CategoricalVariablesTransformation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="src.project.__yes_and_no_transform.html">src.project.__yes_and_no_transform</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">src.project.getDataAndTarget</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#src.project.getDataAndTarget"><code class="docutils literal notranslate"><span class="pre">getDataAndTarget()</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="src.project.getDataAndTarget.html">src.project.getDataAndTarget</a></li>
 <li class="toctree-l2"><a class="reference internal" href="src.project.make_train_test_validation.html">src.project.make_train_test_validation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="src.project.print_splits_shapes.html">src.project.print_splits_shapes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="src.project.base_svm_model.html">src.project.base_svm_model</a></li>
@@ -61,7 +58,10 @@
 <li class="toctree-l2"><a class="reference internal" href="src.project.svm_clasification_report.html">src.project.svm_clasification_report</a></li>
 <li class="toctree-l2"><a class="reference internal" href="src.project.base_xgboost_model.html">src.project.base_xgboost_model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="src.project.xgboost_tunning.html">src.project.xgboost_tunning</a></li>
-<li class="toctree-l2"><a class="reference internal" href="src.project.xgboost_clasification_report.html">src.project.xgboost_clasification_report</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">src.project.xgboost_clasification_report</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#src.project.xgboost_clasification_report"><code class="docutils literal notranslate"><span class="pre">xgboost_clasification_report()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="src.project.plot_feature_importance.html">src.project.plot_feature_importance</a></li>
 </ul>
 </li>
@@ -82,9 +82,9 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home"></a></li>
           <li class="breadcrumb-item"><a href="../api.html">API</a></li>
-      <li class="breadcrumb-item active">src.project.getDataAndTarget</li>
+      <li class="breadcrumb-item active">src.project.xgboost_clasification_report</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/api/src.project.getDataAndTarget.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/api/src.project.xgboost_clasification_report.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -92,30 +92,18 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="src-project-getdataandtarget">
-<h1>src.project.getDataAndTarget<a class="headerlink" href="#src-project-getdataandtarget" title="Permalink to this heading"></a></h1>
+  <section id="src-project-xgboost-clasification-report">
+<h1>src.project.xgboost_clasification_report<a class="headerlink" href="#src-project-xgboost-clasification-report" title="Permalink to this heading"></a></h1>
 <dl class="py function">
-<dt class="sig sig-object py" id="src.project.getDataAndTarget">
-<span class="sig-prename descclassname"><span class="pre">src.project.</span></span><span class="sig-name descname"><span class="pre">getDataAndTarget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_col</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.project.getDataAndTarget" title="Permalink to this definition"></a></dt>
-<dd><p>Splits the data frame into target(column name given) and data(main dataframe without target and id columns)</p>
+<dt class="sig sig-object py" id="src.project.xgboost_clasification_report">
+<span class="sig-prename descclassname"><span class="pre">src.project.</span></span><span class="sig-name descname"><span class="pre">xgboost_clasification_report</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prediction</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.project.xgboost_clasification_report" title="Permalink to this definition"></a></dt>
+<dd><p>prints a report for xgboost model according to a reference data and a xgboost predction</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>target_col</strong> (<em>str.</em>) – {Target column name}.</p></li>
-<li><p><strong>df</strong> (<em>DataFrame.</em>) – {pandas data frame}.</p></li>
+<li><p><strong>data</strong> (<em>DataFrame.</em>) – {test or validation dataframe split to compare the prediction}</p></li>
+<li><p><strong>predicion</strong> (<em>DataFrame.</em>) – {A dataframe produced as a resoult of a svm model prediction}</p></li>
 </ul>
-</dd>
-<dt class="field-even">Return data</dt>
-<dd class="field-even"><p>A dataframe without target and id columns.</p>
-</dd>
-<dt class="field-odd">Rtype data</dt>
-<dd class="field-odd"><p>DataFrame.</p>
-</dd>
-<dt class="field-even">Return target</dt>
-<dd class="field-even"><p>A dataframe with just the target column</p>
-</dd>
-<dt class="field-odd">Rtype target</dt>
-<dd class="field-odd"><p>DataFrame.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -126,8 +114,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="src.project.__yes_and_no_transform.html" class="btn btn-neutral float-left" title="src.project.__yes_and_no_transform" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="src.project.make_train_test_validation.html" class="btn btn-neutral float-right" title="src.project.make_train_test_validation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="src.project.xgboost_tunning.html" class="btn btn-neutral float-left" title="src.project.xgboost_tunning" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="src.project.plot_feature_importance.html" class="btn btn-neutral float-right" title="src.project.plot_feature_importance" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

@@ -21,5 +21,10 @@ API
    src.project.print_splits_shapes
 
    src.project.base_svm_model
+   src.project.svm_tunning
+   src.project.svm_clasification_report
    src.project.base_xgboost_model
+   src.project.xgboost_tunning
+   src.project.xgboost_clasification_report
+   
    src.project.plot_feature_importance

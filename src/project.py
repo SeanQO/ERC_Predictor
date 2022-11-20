@@ -270,8 +270,9 @@ def print_splits_shapes(X_train, X_test, y_train, y_test, X_val, y_val):
   print("X_val: {}".format(X_val.shape))
   print("y val: {}".format(y_val.shape))
 
-#Feature Importance
+#Models
 ###########################################
+
 def base_svm_model(X_train, y_train):
   """
     Creates and trains a basic svm model.
@@ -283,12 +284,55 @@ def base_svm_model(X_train, y_train):
     :type y_train: DataFrame.
 
     :return svm_reg: svm regresor model.
-    :rtype svm_reg: sklearn.svm._classes.SVR.
+    :rtype svm_reg: sklearn.svm._classes.SVC.
     """
   y_train = y_train.values.ravel()
-  svm_reg = SVR(kernel='linear')
+  svm_reg = SVC()
   svm_reg.fit(X_train, y_train)
   return svm_reg
+
+def svm_tunning(X_train, X_test, y_train):
+  """
+    tunes the svm hiper parameters(C, gamma and kernel) to find the optimal for the desired prediction.
+
+    :param X_train: {A dataframe with x train}
+    :type X_train: DataFrame.
+
+    :param X_test: {A dataframe with x test}
+    :type X_test: DataFrame.
+
+    :param y_train: {A dataframe with y train}
+    :type y_train: DataFrame.
+
+    :return grid_predictions: ndarray containing prediction resoults.
+    :rtype grid_predictions: <class 'numpy.ndarray'>.
+    """
+  param_grid = {'C': [0.1, 1, 10, 100, 1000], 
+              'gamma': [1, 0.1, 0.01, 0.001, 0.0001],
+              'kernel': ['linear','poly']} 
+  # 'poly', 'rbf', 'sigmoid', 'precomputed'
+  grid = GridSearchCV(SVC(), param_grid, refit = True, verbose = 3)
+  grid.fit(X_train, y_train)
+  grid_predictions = grid.predict(X_test)
+
+  print("Model best params: ", grid.best_params_)
+  print("Model best estimator: ",grid.best_estimator_)
+
+  return grid_predictions
+
+
+def svm_clasification_report(data, prediction):
+  """
+    prints a report for svm model according to a reference data and a svm predction
+
+    :param data: {test or validation dataframe split to compare the prediction}
+    :type data: DataFrame.
+
+    :param predicion: {A dataframe produced as a resoult of a svm model prediction}
+    :type predicion: DataFrame.
+    """
+  print(metrics.classification_report(data, prediction))
+
 
 def base_xgboost_model(X_train, y_train):
   """
@@ -301,13 +345,43 @@ def base_xgboost_model(X_train, y_train):
     :type y_train: DataFrame.
 
     :return xgb_Classifier: xgb Classifier model.
-    :rtype xgb_Classifier: sklearn.svm._classes.SVR.
+    :rtype xgb_Classifier: xgboost.sklearn.XGBClassifier.
     """
   xgb_Classifier = xgb.XGBClassifier()
   xgb_Classifier.fit(X_train, y_train)
   return xgb_Classifier
-  
-  
+
+def xgboost_tunning(X_test, xgb_Classifier):
+  """
+    tunes the hiperparameters of a given xgboost model.
+
+    :param X_test: {A dataframe with x test}
+    :type X_test: DataFrame.
+
+    :param xgb_Classifier: {xgb Classifier model}.
+    :type xgb_Classifier: xgboost.sklearn.XGBClassifier.
+
+    :return predicion: A dataframe produced as a resoult of a svm model prediction
+    :rtype predicion: DataFrame.
+    """
+  y_pred = xgb_Classifier.predict(X_test)
+  predictions = [round(value) for value in y_pred]
+  return predictions
+
+def xgboost_clasification_report(data, prediction):
+  """
+    prints a report for xgboost model according to a reference data and a xgboost predction
+
+    :param data: {test or validation dataframe split to compare the prediction}
+    :type data: DataFrame.
+
+    :param predicion: {A dataframe produced as a resoult of a svm model prediction}
+    :type predicion: DataFrame.
+    """
+  print("Accuracy:", metrics.accuracy_score(data, prediction))
+
+#Feature Importance
+###########################################
 def plot_feature_importance(model, X_train, X_val):
   """
     graphs the given model importances based on the data.
@@ -319,7 +393,7 @@ def plot_feature_importance(model, X_train, X_val):
     :type y_train: DataFrame.
 
     :param model: {sklearnModel}
-    :type model: sklearn.svm._classes.SVR or xgboost.sklearn.XGBClassifier.
+    :type model: sklearn.svm._classes.SVC or xgboost.sklearn.XGBClassifier.
     """
   explainer = MimicExplainer(model, X_train, LinearExplainableModel)
   global_explanation = explainer.explain_global(X_val)
@@ -328,7 +402,7 @@ def plot_feature_importance(model, X_train, X_val):
   values = np.array(list(global_explanation.get_feature_importance_dict().values()))
 
   model_type = str(type(model))
-  target = "SVM" if  model_type == "<class 'sklearn.svm._classes.SVR'>" else "XGBoost"
+  target = "SVM" if  model_type == "<class 'sklearn.svm._classes.SVC'>" else "XGBoost"
 
   plt.title('{}  Feature importance'.format(target))
   idx = values.argsort()
