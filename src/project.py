@@ -10,16 +10,40 @@ from sklearn.svm import SVR
 from sklearn.svm import SVC
 from sklearn import metrics
 
-msg = "Hello world!"
-print(msg)
+
+def load_database(path):
+  """
+    Loads a csv database from a given path.
+
+    :param path: {path of the csv file}.
+    :type path: str.
+    :return: A dataframe loaded with the csv information.
+    :rtype: DataFrame.
+
+    """
+  df = pd.read_csv(path)
+  return df
+
+def print_df(df):
+  """
+    prints the basic information of a given data frame
+
+    :param df: {pandas data frame}.
+    :type df: DataFrame
+
+    """
+  print(df)
+  print(df.info())
 
 def replace(col_name,df):
   """
     Assigns and replace all unique values of a column to a integer.
     For each unique value found a number from 0 is asigned.
 
-    :param kind: {Target column name, data frame}.
-    :type kind: list[str] or None
+    :param col_name: {Target column name}.
+    :param df: {pandas data frame}.
+    :type col_name: str.
+    :type df: DataFrame.
     :return: A dataframe with the target column turn into categoric values.
     :rtype: DataFrame.
 
