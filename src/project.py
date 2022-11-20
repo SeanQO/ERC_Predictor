@@ -269,3 +269,68 @@ def print_splits_shapes(X_train, X_test, y_train, y_test, X_val, y_val):
   print("y_test: {}".format(y_test.shape))
   print("X_val: {}".format(X_val.shape))
   print("y val: {}".format(y_val.shape))
+
+#Feature Importance
+###########################################
+def base_svm_model(X_train, y_train):
+  """
+    Creates and trains a basic svm model.
+
+    :param X_train: {A dataframe with x train}
+    :type X_train: DataFrame.
+
+    :param y_train: {A dataframe with y train}
+    :type y_train: DataFrame.
+
+    :return svm_reg: svm regresor model.
+    :rtype svm_reg: sklearn.svm._classes.SVR.
+    """
+  y_train = y_train.values.ravel()
+  svm_reg = SVR(kernel='linear')
+  svm_reg.fit(X_train, y_train)
+  return svm_reg
+
+def base_xgboost_model(X_train, y_train):
+  """
+    Creates and trains a basic xgboost model.
+
+    :param X_train: {A dataframe with x train}
+    :type X_train: DataFrame.
+
+    :param y_train: {A dataframe with y train}
+    :type y_train: DataFrame.
+
+    :return xgb_Classifier: xgb Classifier model.
+    :rtype xgb_Classifier: sklearn.svm._classes.SVR.
+    """
+  xgb_Classifier = xgb.XGBClassifier()
+  xgb_Classifier.fit(X_train, y_train)
+  return xgb_Classifier
+  
+  
+def plot_feature_importance(model, X_train, X_val):
+  """
+    graphs the given model importances based on the data.
+
+    :param X_train: {A dataframe with x train}
+    :type X_train: DataFrame.
+
+    :param y_train: {A dataframe with y train}
+    :type y_train: DataFrame.
+
+    :param model: {sklearnModel}
+    :type model: sklearn.svm._classes.SVR or xgboost.sklearn.XGBClassifier.
+    """
+  explainer = MimicExplainer(model, X_train, LinearExplainableModel)
+  global_explanation = explainer.explain_global(X_val)
+
+  names = np.array(list(global_explanation.get_feature_importance_dict().keys()))
+  values = np.array(list(global_explanation.get_feature_importance_dict().values()))
+
+  model_type = str(type(model))
+  target = "SVM" if  model_type == "<class 'sklearn.svm._classes.SVR'>" else "XGBoost"
+
+  plt.title('{}  Feature importance'.format(target))
+  idx = values.argsort()
+  plt.barh(names[idx], values[idx])
+  plt.show()

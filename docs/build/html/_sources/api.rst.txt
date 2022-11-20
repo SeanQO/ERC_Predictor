@@ -19,3 +19,7 @@ API
 
    src.project.make_train_test_validation
    src.project.print_splits_shapes
+
+   src.project.base_svm_model
+   src.project.base_xgboost_model
+   src.project.plot_feature_importance
