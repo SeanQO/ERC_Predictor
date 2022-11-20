@@ -4,27 +4,26 @@ API
 .. autosummary::
    :toctree: api
 
-   src.project.load_database
-   src.project.print_df
+   src.analysis.load_database
+   src.analysis.print_df
 
-   src.project.renameCKDColumns
-   src.project.get_nan_per_col
-   src.project.removeByNan
-   src.project.drop_all_na
-   src.project.CategoricalVariablesTransformation
-   src.project.__yes_and_no_transform
-   src.project.replace
+   src.analysis.renameCKDColumns
+   src.analysis.get_nan_per_col
+   src.analysis.removeByNan
+   src.analysis.drop_all_na
+   src.analysis.CategoricalVariablesTransformation
+   src.analysis.__yes_and_no_transform
 
-   src.project.getDataAndTarget
+   src.analysis.getDataAndTarget
 
-   src.project.make_train_test_validation
-   src.project.print_splits_shapes
+   src.analysis.make_train_test_validation
+   src.analysis.print_splits_shapes
 
-   src.project.base_svm_model
-   src.project.svm_tunning
-   src.project.svm_clasification_report
-   src.project.base_xgboost_model
-   src.project.xgboost_tunning
-   src.project.xgboost_clasification_report
+   src.analysis.base_svm_model
+   src.analysis.svm_tunning
+   src.analysis.svm_clasification_report
+   src.analysis.base_xgboost_model
+   src.analysis.xgboost_tunning
+   src.analysis.xgboost_clasification_report
    
-   src.project.plot_feature_importance
+   src.analysis.plot_feature_importance

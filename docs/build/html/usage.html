@@ -14,9 +14,7 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -43,6 +41,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Usage</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#id1">Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#packages-and-libraries-instalation">Packages and libraries instalation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#runing">Runing</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
@@ -73,10 +72,10 @@
            <div itemprop="articleBody">
              
   <section id="usage">
-<h1>Usage<a class="headerlink" href="#usage" title="Permalink to this heading"></a></h1>
+<h1>Usage<a class="headerlink" href="#usage" title="Permalink to this headline"></a></h1>
 <p>The application consist of</p>
 <section id="id1">
-<h2>Installation<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h2>
+<h2>Installation<a class="headerlink" href="#id1" title="Permalink to this headline"></a></h2>
 <p><strong>WINDOWS</strong></p>
 <p>To use ERC_Predictor, first run a console with admin or root permissions.
 <em>Suggestion for python setup:</em> Create and run a python virtual enviroment with the following commands:</p>
@@ -96,11 +95,23 @@
 </div>
 </section>
 <section id="packages-and-libraries-instalation">
-<h2>Packages and libraries instalation<a class="headerlink" href="#packages-and-libraries-instalation" title="Permalink to this heading"></a></h2>
+<h2>Packages and libraries instalation<a class="headerlink" href="#packages-and-libraries-instalation" title="Permalink to this headline"></a></h2>
 <p><strong>WINDOWS</strong></p>
+<p>To install all the requirements included on the requirements.txt run the conmmand</p>
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp gp-VirtualEnv">(.venv)</span><span class="go">&gt;py -m pip install -r docs/requirements.txt</span>
+</pre></div>
+</div>
+</div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>All the project dependencies are loaded in the requirements.txt, but if any dependencie is missing use the following:</p>
+</div>
 <p>To install each package use pip install on the activated python virtual enviroment.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp gp-VirtualEnv">(.venv)</span> <span class="go">&gt; pip install [library name]</span>
 
+<span class="go">* pip install furo</span>
+<span class="go">* pip install Flask</span>
 <span class="go">* pip install pandas</span>
 <span class="go">* pip install sklearn</span>
 <span class="go">* pip install -U scikit-learn</span>
@@ -121,6 +132,16 @@
 To update any changes in the documentation use the following command:</p>
 <blockquote>
 <div></div></blockquote>
+</section>
+<section id="runing">
+<h2>Runing<a class="headerlink" href="#runing" title="Permalink to this headline"></a></h2>
+<p><strong>WINDOWS</strong>
+To run the project run a console on the root folder of the project, ERC_Predictor folder, and run the command:</p>
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">&gt;.\src\main.py</span>
+</pre></div>
+</div>
+</div></blockquote>
 </section>
 </section>
 

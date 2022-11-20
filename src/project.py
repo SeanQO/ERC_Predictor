@@ -32,11 +32,11 @@ def __data_clensing(df):
 def get_data_clensing():
   clean_df = __data_clensing(df)
   clean_df_head = clean_df.head()
-  df_info = infoOut(clean_df)
+  df_info = __infoOut(clean_df)
 
   return clean_df_head,df_info
 
-def infoOut(data,details=False):
+def __infoOut(data,details=False):
   # code from https://stackoverflow.com/questions/64067424/how-to-convert-df-info-into-data-frame-df-info
 
     dfInfo = data.columns.to_frame(name='Column')
@@ -52,23 +52,23 @@ def infoOut(data,details=False):
     else:
         return dfInfo
 
-def _temp():
-  #Selecting data and target
-  ###########################################
+#Selecting data and target
+###########################################
+def get_data_and_target():
   data, target = analysis.getDataAndTarget('classification',df)
 
   analysis.print_df(data)
   analysis.print_df(target)
 
-  #train, test & validation
-  ###########################################
-
+#train, test & validation
+###########################################
+def get_train_test_val():
   X_train, X_test, y_train, y_test, X_val, y_val = analysis.make_train_test_validation(data,target, 0.3, 0.25)
   analysis.print_splits_shapes(X_train, X_test, y_train, y_test, X_val, y_val)
 
-  #Models
-  ###########################################
-
+#Models
+###########################################
+def get_models(X_train, X_test, y_train, y_test):
   svm_prediction = analysis.svm_tunning(X_train, X_test, y_train)
   analysis.svm_clasification_report(y_test, svm_prediction)
 
@@ -76,8 +76,9 @@ def _temp():
   prediction = analysis.xgboost_tunning(X_test, xgb_Classifier)
   analysis.xgboost_clasification_report(y_test, prediction)
 
-  #Feature Importance
-  ###########################################
+#Feature Importance
+###########################################
+def get_importances(X_train, y_train, X_val):
   base_svm = analysis.base_svm_model(X_train, y_train)
   base_xgboost = analysis.base_xgboost_model(X_train, y_train)
 

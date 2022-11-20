@@ -14,14 +14,10 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="src.project.xgboost_tunning" href="src.project.xgboost_tunning.html" />
-    <link rel="prev" title="src.project.svm_clasification_report" href="src.project.svm_clasification_report.html" /> 
+    <link rel="search" title="Search" href="../search.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -39,32 +35,9 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul class="current">
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="src.project.load_database.html">src.project.load_database</a></li>
-<li class="toctree-l2"><a class="reference internal" href="src.project.print_df.html">src.project.print_df</a></li>
-<li class="toctree-l2"><a class="reference internal" href="src.project.renameCKDColumns.html">src.project.renameCKDColumns</a></li>
-<li class="toctree-l2"><a class="reference internal" href="src.project.get_nan_per_col.html">src.project.get_nan_per_col</a></li>
-<li class="toctree-l2"><a class="reference internal" href="src.project.removeByNan.html">src.project.removeByNan</a></li>
-<li class="toctree-l2"><a class="reference internal" href="src.project.drop_all_na.html">src.project.drop_all_na</a></li>
-<li class="toctree-l2"><a class="reference internal" href="src.project.CategoricalVariablesTransformation.html">src.project.CategoricalVariablesTransformation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="src.project.__yes_and_no_transform.html">src.project.__yes_and_no_transform</a></li>
-<li class="toctree-l2"><a class="reference internal" href="src.project.getDataAndTarget.html">src.project.getDataAndTarget</a></li>
-<li class="toctree-l2"><a class="reference internal" href="src.project.make_train_test_validation.html">src.project.make_train_test_validation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="src.project.print_splits_shapes.html">src.project.print_splits_shapes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="src.project.base_svm_model.html">src.project.base_svm_model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="src.project.svm_tunning.html">src.project.svm_tunning</a></li>
-<li class="toctree-l2"><a class="reference internal" href="src.project.svm_clasification_report.html">src.project.svm_clasification_report</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">src.project.base_xgboost_model</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#src.project.base_xgboost_model"><code class="docutils literal notranslate"><span class="pre">base_xgboost_model()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="src.project.xgboost_tunning.html">src.project.xgboost_tunning</a></li>
-<li class="toctree-l2"><a class="reference internal" href="src.project.xgboost_clasification_report.html">src.project.xgboost_clasification_report</a></li>
-<li class="toctree-l2"><a class="reference internal" href="src.project.plot_feature_importance.html">src.project.plot_feature_importance</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API</a></li>
 </ul>
 
         </div>
@@ -81,7 +54,6 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home"></a></li>
-          <li class="breadcrumb-item"><a href="../api.html">API</a></li>
       <li class="breadcrumb-item active">src.project.base_xgboost_model</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/api/src.project.base_xgboost_model.rst.txt" rel="nofollow"> View page source</a>
@@ -93,36 +65,13 @@
            <div itemprop="articleBody">
              
   <section id="src-project-base-xgboost-model">
-<h1>src.project.base_xgboost_model<a class="headerlink" href="#src-project-base-xgboost-model" title="Permalink to this heading"></a></h1>
-<dl class="py function">
-<dt class="sig sig-object py" id="src.project.base_xgboost_model">
-<span class="sig-prename descclassname"><span class="pre">src.project.</span></span><span class="sig-name descname"><span class="pre">base_xgboost_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_train</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.project.base_xgboost_model" title="Permalink to this definition"></a></dt>
-<dd><p>Creates and trains a basic xgboost model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>X_train</strong> (<em>DataFrame.</em>) – {A dataframe with x train}</p></li>
-<li><p><strong>y_train</strong> (<em>DataFrame.</em>) – {A dataframe with y train}</p></li>
-</ul>
-</dd>
-<dt class="field-even">Return xgb_Classifier</dt>
-<dd class="field-even"><p>xgb Classifier model.</p>
-</dd>
-<dt class="field-odd">Rtype xgb_Classifier</dt>
-<dd class="field-odd"><p>xgboost.sklearn.XGBClassifier.</p>
-</dd>
-</dl>
-</dd></dl>
-
+<h1>src.project.base_xgboost_model<a class="headerlink" href="#src-project-base-xgboost-model" title="Permalink to this headline"></a></h1>
 </section>
 
 
            </div>
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="src.project.svm_clasification_report.html" class="btn btn-neutral float-left" title="src.project.svm_clasification_report" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="src.project.xgboost_tunning.html" class="btn btn-neutral float-right" title="src.project.xgboost_tunning" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-    </div>
+          <footer>
 
   <hr/>
 

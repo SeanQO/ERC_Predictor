@@ -2,15 +2,6 @@ Usage
 =====
 The application consist of 
 
-.. _run:
-Runing
-------------
-**WINDOWS**
-To run the project run a console on the root folder of the project, ERC_Predictor folder, and run the command:
- .. code-block:: console
-
-   >.\src\main.py
-
 .. _installation:
 Installation
 ------------
@@ -43,6 +34,9 @@ To install all the requirements included on the requirements.txt run the conmman
 
   (.venv)>py -m pip install -r docs/requirements.txt
 
+.. note::
+    All the project dependencies are loaded in the requirements.txt, but if any dependencie is missing use the following: 
+
 
 To install each package use pip install on the activated python virtual enviroment.
 
@@ -70,3 +64,12 @@ To install each package use pip install on the activated python virtual envirome
 To update any changes in the documentation use the following command:
  .. code-block:: console
     > sphinx-build -b html docs/source/ docs/build/html
+
+.. _run:
+Runing
+------------
+**WINDOWS**
+To run the project run a console on the root folder of the project, ERC_Predictor folder, and run the command:
+ .. code-block:: console
+
+   >.\src\main.py
