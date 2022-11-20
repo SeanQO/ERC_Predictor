@@ -19,9 +19,23 @@ Welcome to ERC_Predictor's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+*Usage*
+   * Check out the :doc:`usage` section for further information as the :ref:`setup and installation <installation>` of the project and how to manage and install :ref:`packages and Libraries <packagesAndLibraries>`.
+
+*API*
+   * Here you can acces the priject :ref:`API <methodsDoc>`.
+
 Indices and tables
 ==================
 
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+
+Contents
+--------
+
+.. toctree::
+
+   usage
+   api

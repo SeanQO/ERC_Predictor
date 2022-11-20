@@ -1,0 +1,10 @@
+Methods
+=====
+
+.. _methodsDoc:
+Methods documentation
+------------
+
+``project.replace(col_name,df)`` function:
+
+.. autofunction:: project.replace

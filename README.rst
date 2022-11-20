@@ -1,7 +1,7 @@
 ERC PRECDICTOR
 ===================================
 
-**ERC PRECDICTOR** (/lu'make/) is a neural network classifier model for chronic kidney disease risk prediction.
+**ERC PRECDICTOR**  is a neural network classifier model for chronic kidney disease risk prediction.
 
 *developers:*
    * isabella.ortiz056@gmail.com
