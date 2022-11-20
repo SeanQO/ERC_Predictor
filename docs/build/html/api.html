@@ -44,7 +44,15 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">API</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="api/src.project.load_database.html">src.project.load_database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/src.project.print_df.html">src.project.print_df</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/src.project.replace.html">src.project.replace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/src.project.renameCKDColumns.html">src.project.renameCKDColumns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/src.project.get_nan_per_col.html">src.project.get_nan_per_col</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/src.project.removeByNan.html">src.project.removeByNan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/src.project.drop_all_na.html">src.project.drop_all_na</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/src.project.CategoricalVariablesTransformation.html">src.project.CategoricalVariablesTransformation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/src.project.__yes_and_no_transform.html">src.project.__yes_and_no_transform</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/src.project.getDataAndTarget.html">src.project.getDataAndTarget</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/src.project.make_train_test_validation.html">src.project.make_train_test_validation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/src.project.print_splits_shapes.html">src.project.print_splits_shapes</a></li>
 </ul>
 </li>
 </ul>
@@ -87,8 +95,32 @@
 <tr class="row-even"><td><p><a class="reference internal" href="api/src.project.print_df.html#src.project.print_df" title="src.project.print_df"><code class="xref py py-obj docutils literal notranslate"><span class="pre">src.project.print_df</span></code></a>(df)</p></td>
 <td><p>prints the basic information of a given data frame</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="src.project.replace.html#src.project.replace" title="src.project.replace"><code class="xref py py-obj docutils literal notranslate"><span class="pre">src.project.replace</span></code></a>(col_name, df)</p></td>
-<td><p>Assigns and replace all unique values of a column to a integer.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/src.project.renameCKDColumns.html#src.project.renameCKDColumns" title="src.project.renameCKDColumns"><code class="xref py py-obj docutils literal notranslate"><span class="pre">src.project.renameCKDColumns</span></code></a>(df)</p></td>
+<td><p>Replaces all column default names for more legible ones. New names:'id','age', 'blood_pressure', 'specific_gravity', 'albumin', 'sugar', 'red_blood_cells', 'pus_cell','pus_cell_clumps', 'bacteria', 'blood_glucose_random', 'blood_urea', 'serum_creatinine', 'sodium',           'potassium', 'haemoglobin', 'packed_cell_volume', 'white_blood_cell_count', 'red_blood_cell_count',           'hypertension', 'diabetes_mellitus', 'coronary_artery_disease', 'appetite', 'peda_edema',           'anemia', 'classification'.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/src.project.get_nan_per_col.html#src.project.get_nan_per_col" title="src.project.get_nan_per_col"><code class="xref py py-obj docutils literal notranslate"><span class="pre">src.project.get_nan_per_col</span></code></a>(df)</p></td>
+<td><p>Iterates trough every column and caculates the percentage of nan values present in each column.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/src.project.removeByNan.html#src.project.removeByNan" title="src.project.removeByNan"><code class="xref py py-obj docutils literal notranslate"><span class="pre">src.project.removeByNan</span></code></a>(...)</p></td>
+<td><p>Takes a series that contains all the columns name with the respective nan percentaje,  then drops the columns that had nan content above the diven max nan limit.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/src.project.drop_all_na.html#src.project.drop_all_na" title="src.project.drop_all_na"><code class="xref py py-obj docutils literal notranslate"><span class="pre">src.project.drop_all_na</span></code></a>(df)</p></td>
+<td><p>Drops all rows that contains nan values</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/src.project.CategoricalVariablesTransformation.html#src.project.CategoricalVariablesTransformation" title="src.project.CategoricalVariablesTransformation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">src.project.CategoricalVariablesTransformation</span></code></a>(df)</p></td>
+<td><p>Transforms categorical variables in the dataframe by replacing each unique value in a categorical column for an integer as a representation.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/src.project.__yes_and_no_transform.html#src.project.__yes_and_no_transform" title="src.project.__yes_and_no_transform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">src.project.__yes_and_no_transform</span></code></a>(df)</p></td>
+<td><p>Assigns and replace all yes/no columns for 1/0 integers.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/src.project.getDataAndTarget.html#src.project.getDataAndTarget" title="src.project.getDataAndTarget"><code class="xref py py-obj docutils literal notranslate"><span class="pre">src.project.getDataAndTarget</span></code></a>(target_col, df)</p></td>
+<td><p>Splits the data frame into target(column name given) and data(main dataframe without target and id columns)</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/src.project.make_train_test_validation.html#src.project.make_train_test_validation" title="src.project.make_train_test_validation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">src.project.make_train_test_validation</span></code></a>(data, ...)</p></td>
+<td><p>Splits the data frame into train, test &amp; validation with the specified sizes.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/src.project.print_splits_shapes.html#src.project.print_splits_shapes" title="src.project.print_splits_shapes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">src.project.print_splits_shapes</span></code></a>(X_train, ...)</p></td>
+<td><p>prints train, test &amp; validation final dimentions.</p></td>
 </tr>
 </tbody>
 </table>
