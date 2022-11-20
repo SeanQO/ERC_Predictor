@@ -1,3 +1,11 @@
 furo==2021.11.16
 sphinx_rtd_theme
 Flask==2.1.2
+flask_table
+pandas
+sklearn
+scikit-learn
+matplotlib
+xgboost
+interpret
+interpret_community
