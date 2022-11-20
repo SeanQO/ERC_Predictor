@@ -2,6 +2,15 @@ Usage
 =====
 The application consist of 
 
+.. _run:
+Runing
+------------
+**WINDOWS**
+To run the project run a console on the root folder of the project, ERC_Predictor folder, and run the command:
+ .. code-block:: console
+
+   >.\src\main.py
+
 .. _installation:
 Installation
 ------------
@@ -28,12 +37,21 @@ Packages and libraries instalation
 ------------
 **WINDOWS**
 
+To install all the requirements included on the requirements.txt run the conmmand
+
+ .. code-block:: console
+
+  (.venv)>py -m pip install -r docs/requirements.txt
+
+
 To install each package use pip install on the activated python virtual enviroment.
 
 .. code-block:: console
     
     (.venv) > pip install [library name]
-
+    
+    * pip install furo
+    * pip install Flask
     * pip install pandas
     * pip install sklearn
     * pip install -U scikit-learn
