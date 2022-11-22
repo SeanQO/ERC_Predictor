@@ -40,19 +40,78 @@ def index():
 
 @app.route("/model")
 def model():
-    target = request.args.get("target", "")
+    filled = False
+    n = 0
+    pred = ""
+    
+    age = request.args.get("age", "")
+    blood_pressure = request.args.get("blood_pressure", "")
+    pus_cell_clumps = request.args.get("pus_cell_clumps", "")
+    bacteria = request.args.get("bacteria", "")
+    blood_urea = request.args.get("blood_urea", "")
+    serum_creatinine = request.args.get("serum_creatinine", "")
+    hypertension = request.args.get("hypertension", "")
+    diabetes_mellitus = request.args.get("diabetes_mellitus", "")
+    coronary_artery_disease = request.args.get("coronary_artery_disease", "")
+    appetite = request.args.get("appetite", "")
+    peda_edema = request.args.get("peda_edema", "")
+    anemia = request.args.get("anemia", "")
+
+    data_to_pred = [age,blood_pressure,pus_cell_clumps,bacteria,blood_urea, serum_creatinine,hypertension,diabetes_mellitus,coronary_artery_disease,appetite, peda_edema, anemia]
+
+
+    for item in data_to_pred:
+        if(item == ""):
+            n = n+1
+    
+    if(n == 0):
+        filled = True
+
+    n = 0
+
+    if (filled):
+        age = int(request.args.get("age", ""))
+        blood_pressure = int(request.args.get("blood_pressure", ""))
+        pus_cell_clumps = int(request.args.get("pus_cell_clumps", ""))
+        bacteria = int(request.args.get("bacteria", ""))
+        blood_urea = int(request.args.get("blood_urea", ""))
+        serum_creatinine = int(request.args.get("serum_creatinine", ""))
+        hypertension = int(request.args.get("hypertension", ""))
+        diabetes_mellitus = int(request.args.get("diabetes_mellitus", ""))
+        coronary_artery_disease = int(request.args.get("coronary_artery_disease", ""))
+        appetite = int(request.args.get("appetite", ""))
+        peda_edema = int(request.args.get("peda_edema", ""))
+        anemia = int(request.args.get("anemia", ""))
+        model = final_model.fit()
+        pred = final_model.predict(model,data_to_pred)
+
     return(
-        """<div>
+        f"""<div>
                 <ul>
-                    <li><a href="{url_for('/')}">Go back</a></li>
+                    <li><a href="{url_for('index')}">Go back</a></li>
                 </ul>
                 <form action="" method="get">
-                    <input type="text" name="target">
-                    <input type="submit" value="predict">
+                    <ul>
+                        <input type="text" name="age">
+                        <input type="text" name="blood_pressure">
+                        <input type="text" name="pus_cell_clumps">
+                        <input type="text" name="bacteria">
+                        <input type="text" name="blood_urea">
+                        <input type="text" name="serum_creatinine">
+                        <input type="text" name="hypertension">
+                        <input type="text" name="diabetes_mellitus">
+                        <input type="text" name="coronary_artery_disease">
+                        <input type="text" name="appetite">
+                        <input type="text" name="peda_edema">
+                        <input type="text" name="anemia">
+                        <input type="submit" value="predict">
+                    </ul>   
                 </form>
+                <div>
+                    <h1>{pred}</h1>
+                </div>
             </div>
             """
-              + target
     )
 
 @app.route("/analysis/data_clensing")
