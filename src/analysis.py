@@ -4,8 +4,7 @@ import xgboost as xgb
 import matplotlib.pyplot as plt
 from interpret_community.mimic.mimic_explainer import MimicExplainer
 from interpret.ext.glassbox import LinearExplainableModel
-from sklearn.model_selection import train_test_split
-from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import train_test_split, StratifiedKFold, RandomizedSearchCV, GridSearchCV
 from sklearn.svm import SVR
 from sklearn.svm import SVC
 from sklearn import metrics
@@ -275,7 +274,8 @@ def print_splits_shapes(X_train, X_test, y_train, y_test, X_val, y_val):
 
 #Models
 ###########################################
-
+#SVM
+##################################################
 def base_svm_model(X_train, y_train):
   """
     Creates and trains a basic svm model.
@@ -312,17 +312,45 @@ def svm_tunning(X_train, X_test, y_train):
     """
   param_grid = {'C': [0.1, 1, 10, 100, 1000], 
               'gamma': [1, 0.1, 0.01, 0.001, 0.0001],
-              'kernel': ['linear','poly']} 
+              'kernel': ['linear','poly', 'sigmoid', 'precomputed']} 
   # 'poly', 'rbf', 'sigmoid', 'precomputed'
   grid = GridSearchCV(SVC(), param_grid, refit = True, verbose = 3)
   grid.fit(X_train, y_train)
   grid_predictions = grid.predict(X_test)
 
-  print("Model best params: ", grid.best_params_)
-  print("Model best estimator: ",grid.best_estimator_)
+  bestParams = ("Model best params: ", grid.best_params_)
+  bestEstimator = ("Model best estimator: ",grid.best_estimator_)
 
-  return grid_predictions
+  return (bestParams, bestEstimator, grid_predictions)
 
+def predictAfterTuneSVM(grid, model, X_test, X_val, X_train, y_test):
+  """
+    returns the predictions after having tuned the model's hyperparameters
+
+    :param grid: {An instance from GridSearchCV}
+    :type grid: sklearn.model_selection.GridSearchCV.
+
+    :param model: {An instance from SVC}
+    :type model: sklearn.svm._classes.SVC.
+
+    :param X_train: {A dataframe with x train}
+    :type X_train: DataFrame.
+
+    :param y_test: {A dataframe with y test}
+    :type y_test: DataFrame.
+
+    :param X_test: {A dataframe with x test}
+    :type X_test: DataFrame.
+
+    :param X_val: {A dataframe with x val}
+    :type X_val: DataFrame.
+    """
+  grid_predictions = grid.predict(X_test)
+  val_predict = model.predict(X_val)
+  y_train_pred = model.predict(X_train)
+
+  # print classification report
+  print(classification_report(y_test, grid_predictions))
 
 def svm_clasification_report(data, prediction):
   """
@@ -334,10 +362,11 @@ def svm_clasification_report(data, prediction):
     :param predicion: {A dataframe produced as a resoult of a svm model prediction}
     :type predicion: DataFrame.
     """
-  return(metrics.classification_report(data, prediction))
+  return(classification_report(data, prediction))
 
-
-def base_xgboost_model(X_train, y_train):
+#XGBOOST
+##################################################
+def base_xgboost_model(X_train, y_train, X_test):
   """
     Creates and trains a basic xgboost model.
 
@@ -347,29 +376,102 @@ def base_xgboost_model(X_train, y_train):
     :param y_train: {A dataframe with y train}
     :type y_train: DataFrame.
 
-    :return xgb_Classifier: xgb Classifier model.
-    :rtype xgb_Classifier: xgboost.sklearn.XGBClassifier.
-    """
-  xgb_Classifier = xgb.XGBClassifier()
-  xgb_Classifier.fit(X_train, y_train)
-  return xgb_Classifier
-
-def xgboost_tunning(X_test, xgb_Classifier):
-  """
-    tunes the hiperparameters of a given xgboost model.
-
     :param X_test: {A dataframe with x test}
     :type X_test: DataFrame.
-
-    :param xgb_Classifier: {xgb Classifier model}.
-    :type xgb_Classifier: xgboost.sklearn.XGBClassifier.
 
     :return predicion: A dataframe produced as a resoult of a svm model prediction
     :rtype predicion: DataFrame.
     """
+  xgb_Classifier = xgb.XGBClassifier()
+  xgb_Classifier.fit(X_train, y_train)
   y_pred = xgb_Classifier.predict(X_test)
   predictions = [round(value) for value in y_pred]
   return predictions
+
+def xgboost_tunning(model, X_train, y_train):
+  """
+    tunes the hiperparameters of a given xgboost model.
+
+    :param model: {An instance from XGBClassifier}
+    :type model: xgboost.sklearn.XGBClassifier.
+
+    :param X_train: {A dataframe with x train}
+    :type X_train: DataFrame.
+
+    :param y_train: {A dataframe with y train}
+    :type y_train: DataFrame.
+    """
+  # Define the search space
+  param_grid = { 
+    # Learning rate shrinks the weights to make the boosting process more conservative
+    "learning_rate": [0.0001,0.001, 0.01, 0.1, 1] ,
+    # Maximum depth of the tree, increasing it increases the model complexity.
+    "max_depth": range(3,21,3),
+    # Gamma specifies the minimum loss reduction required to make a split.
+    "gamma": [i/10.0 for i in range(0,5)],
+    # Percentage of columns to be randomly samples for each tree.
+    "colsample_bytree": [i/10.0 for i in range(3,10)],
+    # reg_alpha provides l1 regularization to the weight, higher values result in more conservative models
+    "reg_alpha": [1e-5, 1e-2, 0.1, 1, 10, 100],
+    # reg_lambda provides l2 regularization to the weight, higher values result in more conservative models
+    "reg_lambda": [1e-5, 1e-2, 0.1, 1, 10, 100]}
+  # Set up score
+  scoring = ['recall']
+  # Set up the k-fold cross-validation
+  kfold = StratifiedKFold(n_splits=3, shuffle=True, random_state=0)
+
+  # Define random search
+  random_search = RandomizedSearchCV(estimator=model, 
+                            param_distributions=param_grid, 
+                            n_iter=48,
+                            scoring=scoring, 
+                            refit='recall', 
+                            n_jobs=-1, 
+                            cv=kfold, 
+                            verbose=0)
+  # Fit grid search
+  random_result = random_search.fit(X_train, y_train)
+  # Print grid search summary
+  random_result
+  # Print the best score and the corresponding hyperparameters
+  bestScore = (f'The best score is {random_result.best_score_:.4f}')
+  bestStandardDeviation = ('The best score standard deviation is', round(random_result.cv_results_['std_test_recall'][random_result.best_index_], 4))
+  bestHyperparameters = (f'The best hyperparameters are {random_result.best_params_}')
+
+  return(bestScore, bestStandardDeviation, bestHyperparameters)
+
+def predictAfterTuneXGB(X_train, y_train, X_test, X_val):
+  """
+    returns the predictions after having tuned the model's hyperparameters
+
+    :param X_train: {A dataframe with x train}
+    :type X_train: DataFrame.
+
+    :param y_train: {A dataframe with y train}
+    :type y_train: DataFrame.
+
+    :param X_test: {A dataframe with x test}
+    :type X_test: DataFrame.
+
+    :param X_val: {A dataframe with x val}
+    :type X_val: DataFrame.
+    """
+  model = XGBClassifier(reg_lambda = 0.1, 
+    reg_alpha = 28, 
+    max_depth = 8, 
+    learning_rate = 0.000001, 
+    gamma = 0.00000001, 
+    colsample_bytree = 0.99999999)
+
+  model.fit(X_train, y_train)
+
+  y_pred = model.predict(X_test)
+  predictions = [round(value) for value in y_pred]
+  val_predict = model.predict(X_val)
+  y_train_pred = model.predict(X_train)
+
+  return(predictions)
+  
 
 def xgboost_clasification_report(data, prediction):
   """
@@ -381,7 +483,7 @@ def xgboost_clasification_report(data, prediction):
     :param predicion: {A dataframe produced as a resoult of a svm model prediction}
     :type predicion: DataFrame.
     """
-  print("Accuracy:", metrics.accuracy_score(data, prediction))
+  return(classification_report(data, prediction))
 
 #Feature Importance
 ###########################################
