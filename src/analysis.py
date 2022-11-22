@@ -541,7 +541,7 @@ def tuned_svm(X_train, y_train):
     :rtype svm_reg: sklearn.svm._classes.SVC.
     """
   y_train = y_train.values.ravel()
-  svm_reg = SVC(kernel="linear",)
+  svm_reg = SVC(C=100, gamma=1, kernel='linear')
   svm_reg.fit(X_train, y_train)
   prediction = svm_reg.predict(X_train)
   return prediction

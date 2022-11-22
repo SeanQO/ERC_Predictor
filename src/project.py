@@ -82,6 +82,9 @@ def __train_test_val():
   X_train, X_test, y_train, y_test, X_val, y_val = analysis.make_train_test_validation(data,target, 0.3, 0.25)
   return X_train, X_test, y_train, y_test, X_val, y_val
 
+def get_data_splits():
+  X_train, X_test, y_train, y_test, X_val, y_val = __train_test_val()
+  return X_train, X_test, y_train, y_test, X_val, y_val
 
 def get_train_test_val():
   X_train, X_test, y_train, y_test, X_val, y_val = __train_test_val()

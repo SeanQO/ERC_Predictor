@@ -1,6 +1,7 @@
 from flask import Flask
 from flask import request,url_for
 import project
+import final_model
 import pandas as pd
 
 app = Flask(__name__)
