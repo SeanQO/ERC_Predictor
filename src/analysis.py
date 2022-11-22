@@ -9,6 +9,10 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.svm import SVR
 from sklearn.svm import SVC
 from sklearn import metrics
+from xgboost import XGBClassifier, plot_tree
+from sklearn.metrics import accuracy_score
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.metrics import classification_report
 
 def load_database(path):
   """
@@ -330,7 +334,7 @@ def svm_clasification_report(data, prediction):
     :param predicion: {A dataframe produced as a resoult of a svm model prediction}
     :type predicion: DataFrame.
     """
-  print(metrics.classification_report(data, prediction))
+  return(metrics.classification_report(data, prediction))
 
 
 def base_xgboost_model(X_train, y_train):
@@ -406,4 +410,144 @@ def plot_feature_importance(model, X_train, X_val):
   plt.title('{}  Feature importance'.format(target))
   idx = values.argsort()
   plt.barh(names[idx], values[idx])
+  plt.show()
+
+#Accuracy plots
+###########################################
+def plotPredVSReqTrain(X_train, y_train, y_train_pred):
+  """
+    graphs the accuracy between train set and predicted set.
+
+    :param X_train: {A dataframe with x train}
+    :type X_train: DataFrame.
+
+    :param y_train: {A dataframe with y train}
+    :type y_train: DataFrame.
+
+    :param y_train_pred: {A dataframe with y train predicted}
+    :type y_train_pred: DataFrame.
+    """
+  y_limits=(-3,3)
+
+  rango_de_salida_de_las_variables_escaladas = (-1,1)
+  scaler = MinMaxScaler(feature_range=rango_de_salida_de_las_variables_escaladas)
+
+  scaler.fit(X_train)
+
+  x_train_scaled = scaler.transform(X_train)
+
+  plt.figure(figsize=(10,7))
+  plt.plot(x_train_scaled,y_train,'b.',marker='o')
+  plt.plot(x_train_scaled,y_train_pred,'r.',marker='o') 
+  plt.xlabel('x escalado.')
+  plt.ylabel('Valor de salida.')
+  plt.title('Salida deseada y predicción en el conjunto de entrenamiento')
+  plt.ylim(y_limits)
+  plt.legend()
+  plt.show()
+
+def plotPredVSReqValidation(X_train, y_val, val_predict, X_val):
+  """
+    graphs the accuracy between validation set and predicted set.
+
+    :param X_train: {A dataframe with x train}
+    :type X_train: DataFrame.
+
+    :param y_val: {A dataframe with y valiation set}
+    :type y_val: DataFrame.
+
+    :param val_predict: {A dataframe with y valiation set predicted}
+    :type val_predict: DataFrame.
+
+    :param x_val: {A dataframe with x valiation set}
+    :type x_val: DataFrame.
+    """
+  y_limits=(-3,3)
+
+  rango_de_salida_de_las_variables_escaladas = (-1,1)
+  scaler = MinMaxScaler(feature_range=rango_de_salida_de_las_variables_escaladas) 
+
+  scaler.fit(X_train)
+
+  x_val_scaled   = scaler.transform(X_val)
+
+  plt.figure(figsize=(10,7))
+  plt.plot(x_val_scaled,y_val,'b.',marker='o')
+  plt.plot(x_val_scaled,val_predict,'r.',marker='o') 
+  plt.xlabel('x escalado.')
+  plt.ylabel('Valor de salida.')
+  plt.title('Salida deseada y predicción en el conjunto de validación')
+  plt.ylim(y_limits)
+  plt.legend()
+  plt.show()
+
+def plotPredVSReqTest(X_train, y_test, predictions, X_test):
+  """
+    graphs the accuracy between test set and predicted set.
+
+    :param X_train: {A dataframe with x train}
+    :type X_train: DataFrame.
+
+    :param y_test: {A dataframe with y test set}
+    :type y_test: DataFrame.
+
+    :param predictions: {A dataframe with y set predicted}
+    :type predictions: DataFrame.
+
+    :param x_test: {A dataframe with x test set}
+    :type x_test: DataFrame.
+    """
+  y_limits=(-3,3)
+
+  rango_de_salida_de_las_variables_escaladas = (-1,1)  #Tupla con el siguiente formato: (mínimo deseado, máximo deseado).
+  scaler = MinMaxScaler(feature_range=rango_de_salida_de_las_variables_escaladas)  #Instanciamos el objeto para escalar los datos. 
+
+  scaler.fit(X_train) #Ajustamos los datos de entrenamiento.
+
+  x_test_scaled  = scaler.transform(X_test)   #Transformamos los datos de pruebas
+
+  plt.figure(figsize=(10,7))
+  plt.plot(x_test_scaled,y_test,'b.',marker='o')
+  plt.plot(x_test_scaled,predictions,'r.',marker='o') 
+  plt.xlabel('x escalado.')
+  plt.ylabel('Valor de salida.')
+  plt.title('Salida deseada y predicción en el conjunto de pruebas')
+  plt.ylim(y_limits)
+  plt.legend()
+  plt.show()
+
+def plotTrainVSVal(X_train, y_train, X_val, val_predict):
+  """
+    graphs the accuracy between test set and predicted set.
+
+    :param X_train: {A dataframe with x train}
+    :type X_train: DataFrame.
+
+    :param y_train: {A dataframe with y train set}
+    :type y_test: DataFrame.
+
+    :param x_val: {A dataframe with x validation set}
+    :type x_val: DataFrame.
+
+    :param val_predict: {A dataframe with y validation set predicted}
+    :type val_predict: DataFrame.
+    """
+  y_limits=(-3,3)
+
+  rango_de_salida_de_las_variables_escaladas = (-1,1)  #Tupla con el siguiente formato: (mínimo deseado, máximo deseado).
+  scaler = MinMaxScaler(feature_range=rango_de_salida_de_las_variables_escaladas)  #Instanciamos el objeto para escalar los datos. 
+
+  scaler.fit(X_train) #Ajustamos los datos de entrenamiento.
+
+  x_train_scaled = scaler.transform(X_train)  #Transformamos los datos de entrenamiento.
+  x_val_scaled   = scaler.transform(X_val)    #Transformamos los datos de validación.
+
+  plt.figure(figsize=(10,7))
+  plt.plot(x_train_scaled,y_train,'b.',marker='o')
+  plt.plot(x_val_scaled,val_predict,'r.',marker='o') 
+  plt.xlabel('x train escalado.')
+  plt.ylabel('X Validation escalado.')
+  plt.title('conjunto de training vs conjunto de validación')
+  plt.ylim(y_limits)
+  plt.legend()
   plt.show()
