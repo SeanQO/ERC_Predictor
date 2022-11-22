@@ -125,7 +125,7 @@ def get_svm_tuning():
   
 def __xgb():
   X_train, X_test, y_train, y_test, X_val, y_val = __train_test_val()
-  train_pred = analysis.tuned_xgb(X_train, y_train,X_test)
+  train_pred = analysis.tuned_xgb(X_train, y_train)
   train_plt = analysis.plotPredVSReqTrain(X_train, y_train, train_pred)
   
   val_predict = analysis.tuned_svm(X_val, y_val) 

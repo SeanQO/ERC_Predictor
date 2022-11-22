@@ -304,7 +304,7 @@ def base_svm_model(X_train, y_train):
   svm_reg.fit(X_train, y_train)
   return svm_reg
 
-def svm_tuningn(X_train, X_test, y_train):
+def svm_tunning(X_train, X_test, y_train):
   """
     tunes the svm hiper parameters(C, gamma and kernel) to find the optimal for the desired prediction.
 
@@ -322,7 +322,7 @@ def svm_tuningn(X_train, X_test, y_train):
     """
   param_grid = {'C': [0.1, 1, 10, 100, 1000], 
               'gamma': [1, 0.1, 0.01, 0.001, 0.0001],
-              'kernel': ['linear','poly', 'sigmoid']} 
+              'kernel': ['linear','poly', 'sigmoid', 'precomputed']} 
   # 'poly', 'rbf', 'sigmoid', 'precomputed'
   grid = GridSearchCV(SVC(), param_grid, refit = True, verbose = 3)
   grid.fit(X_train, y_train)
@@ -546,7 +546,7 @@ def tuned_svm(X_train, y_train):
   prediction = svm_reg.predict(X_train)
   return prediction
 
-def tuned_xgb(X_train, y_train, X_test):
+def tuned_xgb(X_train, y_train):
   """
     Creates and trains a tuned svm model.
 
@@ -568,7 +568,7 @@ def tuned_xgb(X_train, y_train, X_test):
 
   model.fit(X_train, y_train)
 
-  y_pred = model.predict(X_test)
+  y_pred = model.predict(X_train)
   return y_pred
 
 def plotPredVSReqTrain(X_train, y_train, y_train_pred):
@@ -592,7 +592,7 @@ def plotPredVSReqTrain(X_train, y_train, y_train_pred):
   scaler.fit(X_train)
 
   x_train_scaled = scaler.transform(X_train)
-  slbls=["y: expected return", "", "", "", "", "", "","", "", "", "", ""]
+  slbls=["y: spected return", "", "", "", "", "", "","", "", "", "", ""]
   plbls=["ypred: predicted return", "", "", "", "", "", "","", "", "", "", ""]
 
   plt.figure(figsize=(10,7))
@@ -633,12 +633,9 @@ def plotPredVSReqValidation(X_train, y_val, val_predict, X_val):
 
   x_val_scaled   = scaler.transform(X_val)
 
-  slbls=["y: expected return", "", "", "", "", "", "","", "", "", "", ""]
-  plbls=["ypred: predicted return", "", "", "", "", "", "","", "", "", "", ""]
-
   plt.figure(figsize=(10,7))
-  plt.plot(x_val_scaled,y_val,'b.',marker='o', label= slbls)
-  plt.plot(x_val_scaled,val_predict,'r.',marker='o', label=plbls) 
+  plt.plot(x_val_scaled,y_val,'b.',marker='o', label='y: spected return')
+  plt.plot(x_val_scaled,val_predict,'r.',marker='o', label='ypred: predicted return') 
   plt.xlabel('x escalado.')
   plt.ylabel('Valor de salida.')
   plt.title('Salida deseada y predicción en el conjunto de validación')
@@ -673,12 +670,10 @@ def plotPredVSReqTest(X_train, y_test, predictions, X_test):
   scaler.fit(X_train) #Ajustamos los datos de entrenamiento.
 
   x_test_scaled  = scaler.transform(X_test)   #Transformamos los datos de pruebas
-  slbls=["y: expected return", "", "", "", "", "", "","", "", "", "", ""]
-  plbls=["ypred: predicted return", "", "", "", "", "", "","", "", "", "", ""]
 
   plt.figure(figsize=(10,7))
-  plt.plot(x_test_scaled,y_test,'b.',marker='o', label=slbls)
-  plt.plot(x_test_scaled,predictions,'r.',marker='o', label=plbls) 
+  plt.plot(x_test_scaled,y_test,'b.',marker='o', label='y: spected return')
+  plt.plot(x_test_scaled,predictions,'r.',marker='o', label='ypred: predicted return') 
   plt.xlabel('x escalado.')
   plt.ylabel('Valor de salida.')
   plt.title('Salida deseada y predicción en el conjunto de pruebas')
@@ -714,12 +709,10 @@ def plotTrainVSVal(X_train, y_train, X_val, val_predict):
 
   x_train_scaled = scaler.transform(X_train)  #Transformamos los datos de entrenamiento.
   x_val_scaled   = scaler.transform(X_val)    #Transformamos los datos de validación.
-  slbls=["y: expected return", "", "", "", "", "", "","", "", "", "", ""]
-  plbls=["ypred: predicted return", "", "", "", "", "", "","", "", "", "", ""]
 
   plt.figure(figsize=(10,7))
-  plt.plot(x_train_scaled,y_train,'b.',marker='o', label=slbls)
-  plt.plot(x_val_scaled,val_predict,'r.',marker='o', label=plbls) 
+  plt.plot(x_train_scaled,y_train,'b.',marker='o', label='y: spected return')
+  plt.plot(x_val_scaled,val_predict,'r.',marker='o', label='ypred: predicted return') 
   plt.xlabel('x train escalado.')
   plt.ylabel('X Validation escalado.')
   plt.title('conjunto de training vs conjunto de validación')
