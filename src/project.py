@@ -22,12 +22,17 @@ def __data_clensing(df):
   df, droped = analysis.removeByNan(ACCEPTED_NAN, nan_per_col, df)
   df = analysis.drop_all_na(df)
 
-  clean_df = analysis.CategoricalVariablesTransformation(df)
+  df = analysis.CategoricalVariablesTransformation(df)
+  
+  df = analysis.foat_int(df)
+
+  clean_df = df
 
   analysis.print_df(df)
   return clean_df
 
 def get_data_clensing():
+  
   clean_df = __data_clensing(df)
   clean_df_head = clean_df.head()
   df_info = __infoOut(clean_df)

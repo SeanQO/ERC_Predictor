@@ -136,6 +136,16 @@ def CategoricalVariablesTransformation(df):
   
   return df
 
+def foat_int(df):
+  
+  df['age'] = df['age'].astype(int)
+  df['blood_pressure'] = df['blood_pressure'].astype(int)
+  df['blood_urea'] = df['blood_urea'].astype(int)
+  df['serum_creatinine'] = df['serum_creatinine'].astype(int)
+
+  return df
+
+
 def __yes_and_no_transform(df):
   """
     Assigns and replace all yes/no columns for 1/0 integers.
