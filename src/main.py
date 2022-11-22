@@ -91,17 +91,33 @@ def train_test_val():
 
 @app.route("/analysis/svm")
 def svm():
-    plt_route = project.get_svm()
+    train_plt, val_plt, test_plt, train_val_plt = project.get_svm()
     return f"""<div>
                     <h1>SVM:</h1>
-                    <img src="/static/{plt_route}" />
+                     <h2>Pred VS Train:</h2>
+                    <img src="/static/{train_plt}" />
+                    <h2>Pred VS Val:</h2>
+                    <img src="/static/{val_plt}" />
+                    <h2>Pred VS Train:</h2>
+                    <img src="/static/{test_plt}" />
+                    <h2>Train VS Val:</h2>
+                    <img src="/static/{train_val_plt}" />
                 </div> 
                 """
 
 @app.route("/analysis/xgb")
 def xgb():
+    train_plt, val_plt, test_plt, train_val_plt = project.get_xgb()
     return f"""<div>
-                    <h1>XGB analysis:</h1>
+                    <h1>XGB:</h1>
+                     <h2>Pred VS Train:</h2>
+                    <img src="/static/{train_plt}" />
+                    <h2>Pred VS Val:</h2>
+                    <img src="/static/{val_plt}" />
+                    <h2>Pred VS Train:</h2>
+                    <img src="/static/{test_plt}" />
+                    <h2>Train VS Val:</h2>
+                    <img src="/static/{train_val_plt}" />
                 </div> 
                 """
 

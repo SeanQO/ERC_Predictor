@@ -531,10 +531,35 @@ def tuned_svm(X_train, y_train):
     :rtype svm_reg: sklearn.svm._classes.SVC.
     """
   y_train = y_train.values.ravel()
-  svm_reg = SVC(kernel="linear")
+  svm_reg = SVC(kernel="linear",)
   svm_reg.fit(X_train, y_train)
   prediction = svm_reg.predict(X_train)
   return prediction
+
+def tuned_xgb(X_train, y_train, X_test):
+  """
+    Creates and trains a tuned svm model.
+
+    :param X_train: {A dataframe with x train}
+    :type X_train: DataFrame.
+
+    :param y_train: {A dataframe with y train}
+    :type y_train: DataFrame.
+
+    :return svm_reg: svm regresor model.
+    :rtype svm_reg: sklearn.svm._classes.SVC.
+    """
+  model = XGBClassifier(reg_lambda = 0.1, 
+    reg_alpha = 28, 
+    max_depth = 8, 
+    learning_rate = 0.000001, 
+    gamma = 0.00000001, 
+    colsample_bytree = 0.99999999)
+
+  model.fit(X_train, y_train)
+
+  y_pred = model.predict(X_test)
+  return y_pred
 
 def plotPredVSReqTrain(X_train, y_train, y_train_pred):
   """
@@ -569,9 +594,9 @@ def plotPredVSReqTrain(X_train, y_train, y_train_pred):
   plt.ylim(y_limits)
   plt.legend()
   fig1 = plt.gcf()
-  fig1.savefig("../ERC_Predictor/src/static/something.jpg", dpi=100)
+  fig1.savefig("../ERC_Predictor/src/static/plotPredVSReqTrain.jpg", dpi=100)
   #plt.show()
-  return "something.jpg"
+  return "plotPredVSReqTrain.jpg"
 
 def plotPredVSReqValidation(X_train, y_val, val_predict, X_val):
   """
@@ -606,7 +631,10 @@ def plotPredVSReqValidation(X_train, y_val, val_predict, X_val):
   plt.title('Salida deseada y predicción en el conjunto de validación')
   plt.ylim(y_limits)
   plt.legend()
-  plt.show()
+  fig1 = plt.gcf()
+  fig1.savefig("../ERC_Predictor/src/static/plotPredVSReqValidation.jpg", dpi=100)
+  #plt.show()
+  return "plotPredVSReqValidation.jpg"
 
 def plotPredVSReqTest(X_train, y_test, predictions, X_test):
   """
@@ -641,7 +669,10 @@ def plotPredVSReqTest(X_train, y_test, predictions, X_test):
   plt.title('Salida deseada y predicción en el conjunto de pruebas')
   plt.ylim(y_limits)
   plt.legend()
-  plt.show()
+  fig1 = plt.gcf()
+  fig1.savefig("../ERC_Predictor/src/static/plotPredVSReqTest.jpg", dpi=100)
+  #plt.show()
+  return "plotPredVSReqTest.jpg"
 
 def plotTrainVSVal(X_train, y_train, X_val, val_predict):
   """
@@ -677,4 +708,7 @@ def plotTrainVSVal(X_train, y_train, X_val, val_predict):
   plt.title('conjunto de training vs conjunto de validación')
   plt.ylim(y_limits)
   plt.legend()
-  plt.show()
+  fig1 = plt.gcf()
+  fig1.savefig("../ERC_Predictor/src/static/plotTrainVSVal.jpg", dpi=100)
+  #plt.show()
+  return "plotTrainVSVal.jpg"

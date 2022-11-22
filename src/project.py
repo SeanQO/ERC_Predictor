@@ -94,22 +94,40 @@ def get_train_test_val():
 #Models
 ###########################################
 def __svm():
-  X_train, X_test, y_train, y_test, _, _ = __train_test_val()
-  pred = analysis.tuned_svm(X_train, y_train)
-  plt = analysis.plotPredVSReqTrain(X_train, y_train, pred)
+  X_train, X_test, y_train, y_test, X_val, y_val = __train_test_val()
+  train_pred = analysis.tuned_svm(X_train, y_train)
+  train_plt = analysis.plotPredVSReqTrain(X_train, y_train, train_pred)
+  
+  val_predict = analysis.tuned_svm(X_val, y_val) 
+  val_plt = analysis.plotPredVSReqValidation(X_train, y_val, val_predict, X_val)
+  
+  test_predict = analysis.tuned_svm(X_test, y_test)
+  test_plt = analysis.plotPredVSReqTest(X_train, y_test, test_predict, X_test)
+  
+  #train_val_pred = analysis.tuned_svm(X_test, y_test)
+  train_val_plt = analysis.plotTrainVSVal(X_train, y_train, X_val, val_predict)
 
-  return plt
+  return train_plt, val_plt, test_plt, train_val_plt
 
 def get_svm():
-  plt_route = __svm()
-  return plt_route
+  train_plt, val_plt, test_plt, train_val_plt = __svm()
+  return train_plt, val_plt, test_plt, train_val_plt
 
 def __xgb():
-  X_train, X_test, y_train, y_test, _, _ = __train_test_val()
-  xgb_Classifier = analysis.base_xgboost_model(X_train, y_train)
-  prediction = analysis.xgboost_tunning(X_test, xgb_Classifier)
-  analysis.xgboost_clasification_report(y_test, prediction)
-  return
+  X_train, X_test, y_train, y_test, X_val, y_val = __train_test_val()
+  train_pred = analysis.tuned_xgb(X_train, y_train,X_test)
+  train_plt = analysis.plotPredVSReqTrain(X_train, y_train, train_pred)
+  
+  val_predict = analysis.tuned_svm(X_val, y_val) 
+  val_plt = analysis.plotPredVSReqValidation(X_train, y_val, val_predict, X_val)
+  
+  test_predict = analysis.tuned_svm(X_test, y_test)
+  test_plt = analysis.plotPredVSReqTest(X_train, y_test, test_predict, X_test)
+  
+  #train_val_pred = analysis.tuned_svm(X_test, y_test)
+  train_val_plt = analysis.plotTrainVSVal(X_train, y_train, X_val, val_predict)
+
+  return train_plt, val_plt, test_plt, train_val_plt
   
 def get_xgb():
   return
