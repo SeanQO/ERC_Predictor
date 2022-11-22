@@ -91,12 +91,10 @@ def train_test_val():
 
 @app.route("/analysis/svm")
 def svm():
-    svm_prediction, svm_pred_report = project.get_svm()
+    plt_route = project.get_svm()
     return f"""<div>
-                    <h1>SVM predictions:</h1>
-                    {svm_prediction}
-                    <h1>SVM analysis:</h1>
-                    {svm_pred_report}
+                    <h1>SVM:</h1>
+                    <img src="/static/{plt_route}" />
                 </div> 
                 """
 

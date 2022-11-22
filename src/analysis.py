@@ -414,6 +414,26 @@ def plot_feature_importance(model, X_train, X_val):
 
 #Accuracy plots
 ###########################################
+
+def tuned_svm(X_train, y_train):
+  """
+    Creates and trains a tuned svm model.
+
+    :param X_train: {A dataframe with x train}
+    :type X_train: DataFrame.
+
+    :param y_train: {A dataframe with y train}
+    :type y_train: DataFrame.
+
+    :return svm_reg: svm regresor model.
+    :rtype svm_reg: sklearn.svm._classes.SVC.
+    """
+  y_train = y_train.values.ravel()
+  svm_reg = SVC(kernel="linear")
+  svm_reg.fit(X_train, y_train)
+  prediction = svm_reg.predict(X_train)
+  return prediction
+
 def plotPredVSReqTrain(X_train, y_train, y_train_pred):
   """
     graphs the accuracy between train set and predicted set.
@@ -444,7 +464,10 @@ def plotPredVSReqTrain(X_train, y_train, y_train_pred):
   plt.title('Salida deseada y predicción en el conjunto de entrenamiento')
   plt.ylim(y_limits)
   plt.legend()
-  plt.show()
+  fig1 = plt.gcf()
+  fig1.savefig("something.jpg", dpi=100)
+  #plt.show()
+  return "something.jpg"
 
 def plotPredVSReqValidation(X_train, y_val, val_predict, X_val):
   """

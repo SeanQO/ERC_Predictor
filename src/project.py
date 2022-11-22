@@ -61,7 +61,7 @@ def __data_and_target():
   return data, target
 
 def get_data_and_target():
-  data, target = __data_and_target(clean_df)
+  data, target = __data_and_target()
   data_head = data.head()
   data_info = __infoOut(data)
 
@@ -95,13 +95,14 @@ def get_train_test_val():
 ###########################################
 def __svm():
   X_train, X_test, y_train, y_test, _, _ = __train_test_val()
-  svm_prediction = analysis.svm_tunning(X_train, X_test, y_train)
-  svm_pred_report = analysis.svm_clasification_report(y_test, svm_prediction)
-  return svm_prediction, svm_pred_report
+  pred = analysis.tuned_svm(X_train, y_train)
+  plt = analysis.plotPredVSReqTrain(X_train, y_train, pred)
+
+  return plt
 
 def get_svm():
-  svm_prediction, svm_pred_report = __svm()
-  return svm_prediction, svm_pred_report
+  plt_route = __svm()
+  return plt_route
 
 def __xgb():
   X_train, X_test, y_train, y_test, _, _ = __train_test_val()
