@@ -46,7 +46,7 @@ def data_clensing():
 
     return f"""<div>
                 <ul>
-                    <li><a href="{url_for('/')}">Go back</a></li>
+                    <li><a href="{url_for('index')}">Go back</a></li>
                 </ul>
                 <h1>Clean Data frame:</h1>
                 {clean_df_html}
@@ -64,7 +64,7 @@ def data_target():
 
     return f"""<div>
                     <ul>
-                        <li><a href="{url_for('/')}">Go back</a></li>
+                        <li><a href="{url_for('index')}">Go back</a></li>
                     </ul>
                     <h1>Data and target split:</h1>
                     <br/>
@@ -87,7 +87,7 @@ def train_test_val():
 
     return f"""<div>
                     <ul>
-                        <li><a href="{url_for('/')}">Go back</a></li>
+                        <li><a href="{url_for('index')}">Go back</a></li>
                     </ul>
                     <h1>Train test validation:</h1>
                     <br/>
@@ -112,6 +112,7 @@ def svm():
     return f"""<div>
                     <ul>
                         <li><a href="{url_for('tunning')}">Tunning</a></li>
+                        <li><a href="{url_for('index')}">Go back</a></li>
                     </ul>
                     <h1>SVM:</h1>
                      <h2>Pred VS Train:</h2>
