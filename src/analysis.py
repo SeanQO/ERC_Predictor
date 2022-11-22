@@ -304,7 +304,7 @@ def base_svm_model(X_train, y_train):
   svm_reg.fit(X_train, y_train)
   return svm_reg
 
-def svm_tunning(X_train, X_test, y_train):
+def svm_tuningn(X_train, X_test, y_train):
   """
     tunes the svm hiper parameters(C, gamma and kernel) to find the optimal for the desired prediction.
 
@@ -322,7 +322,7 @@ def svm_tunning(X_train, X_test, y_train):
     """
   param_grid = {'C': [0.1, 1, 10, 100, 1000], 
               'gamma': [1, 0.1, 0.01, 0.001, 0.0001],
-              'kernel': ['linear','poly', 'sigmoid', 'precomputed']} 
+              'kernel': ['linear','poly', 'sigmoid']} 
   # 'poly', 'rbf', 'sigmoid', 'precomputed'
   grid = GridSearchCV(SVC(), param_grid, refit = True, verbose = 3)
   grid.fit(X_train, y_train)
@@ -592,7 +592,7 @@ def plotPredVSReqTrain(X_train, y_train, y_train_pred):
   scaler.fit(X_train)
 
   x_train_scaled = scaler.transform(X_train)
-  slbls=["y: spected return", "", "", "", "", "", "","", "", "", "", ""]
+  slbls=["y: expected return", "", "", "", "", "", "","", "", "", "", ""]
   plbls=["ypred: predicted return", "", "", "", "", "", "","", "", "", "", ""]
 
   plt.figure(figsize=(10,7))
@@ -634,7 +634,7 @@ def plotPredVSReqValidation(X_train, y_val, val_predict, X_val):
   x_val_scaled   = scaler.transform(X_val)
 
   plt.figure(figsize=(10,7))
-  plt.plot(x_val_scaled,y_val,'b.',marker='o', label='y: spected return')
+  plt.plot(x_val_scaled,y_val,'b.',marker='o', label='y: expected return')
   plt.plot(x_val_scaled,val_predict,'r.',marker='o', label='ypred: predicted return') 
   plt.xlabel('x escalado.')
   plt.ylabel('Valor de salida.')
@@ -672,7 +672,7 @@ def plotPredVSReqTest(X_train, y_test, predictions, X_test):
   x_test_scaled  = scaler.transform(X_test)   #Transformamos los datos de pruebas
 
   plt.figure(figsize=(10,7))
-  plt.plot(x_test_scaled,y_test,'b.',marker='o', label='y: spected return')
+  plt.plot(x_test_scaled,y_test,'b.',marker='o', label='y: expected return')
   plt.plot(x_test_scaled,predictions,'r.',marker='o', label='ypred: predicted return') 
   plt.xlabel('x escalado.')
   plt.ylabel('Valor de salida.')
@@ -711,7 +711,7 @@ def plotTrainVSVal(X_train, y_train, X_val, val_predict):
   x_val_scaled   = scaler.transform(X_val)    #Transformamos los datos de validación.
 
   plt.figure(figsize=(10,7))
-  plt.plot(x_train_scaled,y_train,'b.',marker='o', label='y: spected return')
+  plt.plot(x_train_scaled,y_train,'b.',marker='o', label='y: expected return')
   plt.plot(x_val_scaled,val_predict,'r.',marker='o', label='ypred: predicted return') 
   plt.xlabel('x train escalado.')
   plt.ylabel('X Validation escalado.')

@@ -118,6 +118,11 @@ def get_svm():
   train_plt, val_plt, test_plt, train_val_plt = __svm()
   return train_plt, val_plt, test_plt, train_val_plt
 
+def get_svm_tuning():
+  X_train, X_test, y_train, _ , _, _ = __train_test_val()
+  bestParams, bestEstimator, _ = analysis.svm_tuningn(X_train, X_test, y_train)
+  return bestEstimator, bestParams
+  
 def __xgb():
   X_train, X_test, y_train, y_test, X_val, y_val = __train_test_val()
   train_pred = analysis.tuned_xgb(X_train, y_train,X_test)
@@ -135,7 +140,8 @@ def __xgb():
   return train_plt, val_plt, test_plt, train_val_plt
   
 def get_xgb():
-  return
+  train_plt, val_plt, test_plt, train_val_plt = __xgb()
+  return train_plt, val_plt, test_plt, train_val_plt 
 
 #Feature Importance
 ###########################################

@@ -26,6 +26,9 @@ def model():
     target = request.args.get("target", "")
     return(
         """<div>
+                <ul>
+                    <li><a href="{url_for('/')}">Go back</a></li>
+                </ul>
                 <form action="" method="get">
                     <input type="text" name="target">
                     <input type="submit" value="predict">
@@ -41,7 +44,15 @@ def data_clensing():
     clean_df_html = pd.DataFrame(data=clean_df).to_html()
     df_info = pd.DataFrame(data=df_info).to_html()
 
-    return f'<h1>Clean Data frame:</h1>{clean_df_html}{df_info}'
+    return f"""<div>
+                <ul>
+                    <li><a href="{url_for('/')}">Go back</a></li>
+                </ul>
+                <h1>Clean Data frame:</h1>
+                {clean_df_html}
+                {df_info}
+            </div>
+            """ 
 
 @app.route("/analysis/data_target")
 def data_target():
@@ -52,6 +63,9 @@ def data_target():
     target_info_html = pd.DataFrame(data=target_info).to_html()
 
     return f"""<div>
+                    <ul>
+                        <li><a href="{url_for('/')}">Go back</a></li>
+                    </ul>
                     <h1>Data and target split:</h1>
                     <br/>
                     <h1>Data split:</h1>
@@ -72,6 +86,9 @@ def train_test_val():
     y_val_info_html = pd.DataFrame(data=y_val_info).to_html()
 
     return f"""<div>
+                    <ul>
+                        <li><a href="{url_for('/')}">Go back</a></li>
+                    </ul>
                     <h1>Train test validation:</h1>
                     <br/>
                     <h1>X_train:</h1>
@@ -93,6 +110,9 @@ def train_test_val():
 def svm():
     train_plt, val_plt, test_plt, train_val_plt = project.get_svm()
     return f"""<div>
+                    <ul>
+                        <li><a href="{url_for('tunning')}">Tunning</a></li>
+                    </ul>
                     <h1>SVM:</h1>
                      <h2>Pred VS Train:</h2>
                     <img src="/static/{train_plt}" />
@@ -104,6 +124,19 @@ def svm():
                     <img src="/static/{train_val_plt}" />
                 </div> 
                 """
+@app.route("/tunning")
+def tunning():
+    bestEstimator, bestParams = project.get_svm_tuning()
+    return f"""<div>
+                    <ul>
+                        <li><a href="{url_for('svm')}">Go back</a></li>
+                    </ul>
+                    <h1>Tunning for:</h1>
+                     <h2>Best parameters: {bestParams}</h2>
+                     <h2>Best estimator: {bestEstimator}<h2/>
+                </div> 
+                """
+    
 
 @app.route("/analysis/xgb")
 def xgb():
