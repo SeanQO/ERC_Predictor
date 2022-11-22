@@ -633,9 +633,12 @@ def plotPredVSReqValidation(X_train, y_val, val_predict, X_val):
 
   x_val_scaled   = scaler.transform(X_val)
 
+  slbls=["y: expected return", "", "", "", "", "", "","", "", "", "", ""]
+  plbls=["ypred: predicted return", "", "", "", "", "", "","", "", "", "", ""]
+
   plt.figure(figsize=(10,7))
-  plt.plot(x_val_scaled,y_val,'b.',marker='o', label='y: expected return')
-  plt.plot(x_val_scaled,val_predict,'r.',marker='o', label='ypred: predicted return') 
+  plt.plot(x_val_scaled,y_val,'b.',marker='o', label= slbls)
+  plt.plot(x_val_scaled,val_predict,'r.',marker='o', label=plbls) 
   plt.xlabel('x escalado.')
   plt.ylabel('Valor de salida.')
   plt.title('Salida deseada y predicción en el conjunto de validación')
@@ -670,10 +673,12 @@ def plotPredVSReqTest(X_train, y_test, predictions, X_test):
   scaler.fit(X_train) #Ajustamos los datos de entrenamiento.
 
   x_test_scaled  = scaler.transform(X_test)   #Transformamos los datos de pruebas
+  slbls=["y: expected return", "", "", "", "", "", "","", "", "", "", ""]
+  plbls=["ypred: predicted return", "", "", "", "", "", "","", "", "", "", ""]
 
   plt.figure(figsize=(10,7))
-  plt.plot(x_test_scaled,y_test,'b.',marker='o', label='y: expected return')
-  plt.plot(x_test_scaled,predictions,'r.',marker='o', label='ypred: predicted return') 
+  plt.plot(x_test_scaled,y_test,'b.',marker='o', label=slbls)
+  plt.plot(x_test_scaled,predictions,'r.',marker='o', label=plbls) 
   plt.xlabel('x escalado.')
   plt.ylabel('Valor de salida.')
   plt.title('Salida deseada y predicción en el conjunto de pruebas')
@@ -709,10 +714,12 @@ def plotTrainVSVal(X_train, y_train, X_val, val_predict):
 
   x_train_scaled = scaler.transform(X_train)  #Transformamos los datos de entrenamiento.
   x_val_scaled   = scaler.transform(X_val)    #Transformamos los datos de validación.
+  slbls=["y: expected return", "", "", "", "", "", "","", "", "", "", ""]
+  plbls=["ypred: predicted return", "", "", "", "", "", "","", "", "", "", ""]
 
   plt.figure(figsize=(10,7))
-  plt.plot(x_train_scaled,y_train,'b.',marker='o', label='y: expected return')
-  plt.plot(x_val_scaled,val_predict,'r.',marker='o', label='ypred: predicted return') 
+  plt.plot(x_train_scaled,y_train,'b.',marker='o', label=slbls)
+  plt.plot(x_val_scaled,val_predict,'r.',marker='o', label=plbls) 
   plt.xlabel('x train escalado.')
   plt.ylabel('X Validation escalado.')
   plt.title('conjunto de training vs conjunto de validación')
