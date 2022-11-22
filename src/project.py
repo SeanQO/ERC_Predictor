@@ -120,7 +120,7 @@ def get_svm():
 
 def get_svm_tuning():
   X_train, X_test, y_train, _ , _, _ = __train_test_val()
-  bestParams, bestEstimator, _ = analysis.svm_tuningn(X_train, X_test, y_train)
+  bestParams, bestEstimator, _ = analysis.svm_tunning(X_train, X_test, y_train)
   return bestEstimator, bestParams
   
 def __xgb():
