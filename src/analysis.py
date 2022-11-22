@@ -557,17 +557,19 @@ def plotPredVSReqTrain(X_train, y_train, y_train_pred):
   scaler.fit(X_train)
 
   x_train_scaled = scaler.transform(X_train)
+  slbls=["y: spected return", "", "", "", "", "", "","", "", "", "", ""]
+  plbls=["ypred: predicted return", "", "", "", "", "", "","", "", "", "", ""]
 
   plt.figure(figsize=(10,7))
-  plt.plot(x_train_scaled,y_train,'b.',marker='o')
-  plt.plot(x_train_scaled,y_train_pred,'r.',marker='o') 
+  plt.plot(x_train_scaled,y_train,'b.',marker='o', label = slbls)
+  plt.plot(x_train_scaled,y_train_pred,'r.',marker='o', label = plbls) 
   plt.xlabel('x escalado.')
   plt.ylabel('Valor de salida.')
   plt.title('Salida deseada y predicción en el conjunto de entrenamiento')
   plt.ylim(y_limits)
   plt.legend()
   fig1 = plt.gcf()
-  fig1.savefig("something.jpg", dpi=100)
+  fig1.savefig("../ERC_Predictor/src/static/something.jpg", dpi=100)
   #plt.show()
   return "something.jpg"
 
@@ -597,8 +599,8 @@ def plotPredVSReqValidation(X_train, y_val, val_predict, X_val):
   x_val_scaled   = scaler.transform(X_val)
 
   plt.figure(figsize=(10,7))
-  plt.plot(x_val_scaled,y_val,'b.',marker='o')
-  plt.plot(x_val_scaled,val_predict,'r.',marker='o') 
+  plt.plot(x_val_scaled,y_val,'b.',marker='o', label='y: spected return')
+  plt.plot(x_val_scaled,val_predict,'r.',marker='o', label='ypred: predicted return') 
   plt.xlabel('x escalado.')
   plt.ylabel('Valor de salida.')
   plt.title('Salida deseada y predicción en el conjunto de validación')
@@ -632,8 +634,8 @@ def plotPredVSReqTest(X_train, y_test, predictions, X_test):
   x_test_scaled  = scaler.transform(X_test)   #Transformamos los datos de pruebas
 
   plt.figure(figsize=(10,7))
-  plt.plot(x_test_scaled,y_test,'b.',marker='o')
-  plt.plot(x_test_scaled,predictions,'r.',marker='o') 
+  plt.plot(x_test_scaled,y_test,'b.',marker='o', label='y: spected return')
+  plt.plot(x_test_scaled,predictions,'r.',marker='o', label='ypred: predicted return') 
   plt.xlabel('x escalado.')
   plt.ylabel('Valor de salida.')
   plt.title('Salida deseada y predicción en el conjunto de pruebas')
@@ -668,8 +670,8 @@ def plotTrainVSVal(X_train, y_train, X_val, val_predict):
   x_val_scaled   = scaler.transform(X_val)    #Transformamos los datos de validación.
 
   plt.figure(figsize=(10,7))
-  plt.plot(x_train_scaled,y_train,'b.',marker='o')
-  plt.plot(x_val_scaled,val_predict,'r.',marker='o') 
+  plt.plot(x_train_scaled,y_train,'b.',marker='o', label='y: spected return')
+  plt.plot(x_val_scaled,val_predict,'r.',marker='o', label='ypred: predicted return') 
   plt.xlabel('x train escalado.')
   plt.ylabel('X Validation escalado.')
   plt.title('conjunto de training vs conjunto de validación')
