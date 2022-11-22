@@ -9,14 +9,31 @@ app = Flask(__name__)
 def index():
     return(
         f"""<div>
-                <ul>
-                    <li><a href="{url_for('model')}">Model</a></li>
-                    <li><a href="{url_for('data_clensing')}">Data clensing</a></li>
-                    <li><a href="{url_for('data_target')}">Data and target split</a></li>
-                    <li><a href="{url_for('train_test_val')}">Train,test and validation splits split</a></li>
-                    <li><a href="{url_for('svm')}">SVM analysis</a></li>
-                    <li><a href="{url_for('xgb')}">XGB analysis</a></li>
-                </ul>
+                <head>
+                    <h1 style="text-align:center;font-size:300%;">ERC Predictor</h1>
+                </head>
+                <body style="background-color:lightgrey; text-align:center;">
+                    <ul>
+                        <br>
+                        <a href="{url_for('model')}"><input type=button value="Model" style="background:darkcyan;color:white;"></a>
+                        </br>
+                        <br>
+                        <a href="{url_for('data_clensing')}"><input type=button value="Data clensing" style="background:darkcyan;color:white;"></a>
+                        </br>
+                        <br>
+                        <a href="{url_for('data_target')}"><input type=button value="Data and target split" style="background:darkcyan;color:white;"></a>
+                        </br>
+                        <br>
+                        <a href="{url_for('train_test_val')}"><input type=button value="Train,test and validation splits split" style="background:darkcyan;color:white;"></a>
+                        </br>
+                        <br>
+                        <a href="{url_for('svm')}"><input type=button value="SVM analysis" style="background:darkcyan;color:white;"></a>
+                        </br>
+                        <br>
+                        <a href="{url_for('xgb')}"><input type=button value="XGB analysis" style="background:darkcyan;color:white;"></a>
+                        </br>
+                    </ul>
+                </body>
             </div>
             """        
     )
